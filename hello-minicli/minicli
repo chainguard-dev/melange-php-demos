@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+
+<?php
+use Minicli\Curly\Client;
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Minicli\App;
+use Minicli\Exception\CommandNotFoundException;
+
+$app = new App([
+    'debug' => true
+]);
+
+$app->setSignature('Usage: ./minicli advice');
+
+$app->registerCommand('advice', function () use ($app) {
+    $client = new Client();
+
+    $response = $client->get('https://api.adviceslip.com/advice');
+    if ($response['code'] !== 200) {
+        $app->getPrinter()->error('An API error has occurred.');
+        return;
+    }
+
+    $advice = json_decode($response['body'], true);
+    $app->getPrinter()->info($advice['slip']['advice']);
+});
+
+try {
+    $app->runCommand($argv);
+} catch (CommandNotFoundException $notFoundException) {
+    $app->getPrinter()->error("Command Not Found.");
+    return 1;
+} catch (Exception $exception) {
+    if ($app->config->debug) {
+        $app->getPrinter()->error("An error occurred:");
+        $app->getPrinter()->error($exception->getMessage());
+    }
+    return 1;
+}
+
+return 0;

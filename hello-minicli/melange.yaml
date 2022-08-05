@@ -1,0 +1,35 @@
+package:
+  name: hello-minicli
+  version: 0.1.0
+  description: Minicli melange demo
+  target-architecture:
+    - all
+  copyright:
+    - license: Apache-2.0
+      paths:
+        - "*"
+
+environment:
+  contents:
+    repositories:
+      - https://dl-cdn.alpinelinux.org/alpine/edge/main
+      - https://dl-cdn.alpinelinux.org/alpine/edge/community
+    packages:
+      - alpine-baselayout-data
+      - ca-certificates-bundle
+      - curl
+      - php81
+      - php81-common
+      - php81-curl
+      - php81-mbstring
+      - php81-openssl
+      - composer
+
+pipeline:
+  - name: Build Minicli application
+    runs: |
+      APP_HOME="${{targets.destdir}}/usr/share/hello-minicli"
+      mkdir -p "${APP_HOME}"
+      cp ./composer.json ./minicli "${APP_HOME}"
+      /usr/bin/composer install -d "${APP_HOME}" --no-dev
+      chmod +x "${APP_HOME}/minicli"
