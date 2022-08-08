@@ -7,7 +7,12 @@ if (php_sapi_name() !== 'cli') {
     exit;
 }
 
-require __DIR__ . '/vendor/autoload.php';
+$vendor_path = __DIR__ . '/vendor/autoload.php';
+
+if (!file_exists($vendor_path)) {
+    $vendor_path = getenv('MINICLI_HOME') . '/vendor/autoload.php';
+}
+require $vendor_path;
 
 use Minicli\App;
 use Minicli\Exception\CommandNotFoundException;

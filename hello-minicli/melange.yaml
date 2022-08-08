@@ -8,6 +8,12 @@ package:
     - license: Apache-2.0
       paths:
         - "*"
+  dependencies:
+    runtime:
+      - php81
+      - php81-common
+      - php81-curl
+      - php81-openssl
 
 environment:
   contents:
@@ -21,15 +27,17 @@ environment:
       - php81
       - php81-common
       - php81-curl
-      - php81-mbstring
       - php81-openssl
       - composer
 
 pipeline:
   - name: Build Minicli application
     runs: |
-      APP_HOME="${{targets.destdir}}/usr/share/hello-minicli"
-      mkdir -p "${APP_HOME}"
-      cp ./composer.json ./minicli "${APP_HOME}"
-      /usr/bin/composer install -d "${APP_HOME}" --no-dev
-      chmod +x "${APP_HOME}/minicli"
+      set -x
+      MINICLI_HOME="${{targets.destdir}}/usr/share/hello-minicli"
+      EXEC_DIR="${{targets.destdir}}/usr/bin"
+      mkdir -p "${MINICLI_HOME}" "${EXEC_DIR}"
+      cp ./composer.json "${MINICLI_HOME}"
+      /usr/bin/composer install -d "${MINICLI_HOME}" --no-dev
+      cp ./minicli "${EXEC_DIR}"
+      chmod +x "${EXEC_DIR}/minicli"
