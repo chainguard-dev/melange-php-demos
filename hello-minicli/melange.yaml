@@ -33,7 +33,6 @@ environment:
 pipeline:
   - name: Build Minicli application
     runs: |
-      set -x
       MINICLI_HOME="${{targets.destdir}}/usr/share/hello-minicli"
       EXEC_DIR="${{targets.destdir}}/usr/bin"
       mkdir -p "${MINICLI_HOME}" "${EXEC_DIR}"
