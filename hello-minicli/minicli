@@ -1,7 +1,10 @@
 #!/usr/bin/env php
 
 <?php
+
+use Minicli\App;
 use Minicli\Curly\Client;
+use Minicli\Exception\CommandNotFoundException;
 
 if (php_sapi_name() !== 'cli') {
     exit;
@@ -10,16 +13,13 @@ if (php_sapi_name() !== 'cli') {
 $vendor_path = __DIR__ . '/vendor/autoload.php';
 
 if (!file_exists($vendor_path)) {
-    $vendor_path = getenv('MINICLI_HOME') . '/vendor/autoload.php';
+    $minicli_home = getenv('MINICLI_HOME') ?: '/usr/share/minicli';
+    $vendor_path = $minicli_home . '/vendor/autoload.php';
 }
+
 require $vendor_path;
 
-use Minicli\App;
-use Minicli\Exception\CommandNotFoundException;
-
-$app = new App([
-    'debug' => true
-]);
+$app = new App(['debug' => true]);
 
 $app->setSignature('Usage: ./minicli advice');
 
