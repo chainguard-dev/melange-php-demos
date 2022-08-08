@@ -1,9 +1,10 @@
 # Minicli melange + apko Demo
 
-This demo creates an APK package for a minimalist CLI application in PHP written with [minicli](https://github.com/minicli/minicli).
+This demo creates an APK package for a minimalist CLI application in PHP written with [minicli](https://github.com/minicli/minicli), using [melange](https://github.com/chainguard-dev/melange).
+
 The demo app uses the [advice slip API](https://api.adviceslip.com/) to output a random piece of advice.
 
-With the included `apko.yaml` file, you can create a minimalist container image with the melange-generated APK and run it with Docker.
+With the included `apko.yaml` file, you can create a minimalist container image using [apko](https://github.com/chainguard-dev/apko) and have the melange-generated APK installed within your image. 
 
 ## Requirements
 You'll need Docker to run this demo.
