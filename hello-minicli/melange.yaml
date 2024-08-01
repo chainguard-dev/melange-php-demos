@@ -5,29 +5,28 @@ package:
   target-architecture:
     - all
   copyright:
-    - license: Apache-2.0
-      paths:
-        - "*"
+    - license: MIT
   dependencies:
     runtime:
-      - php81
-      - php81-common
-      - php81-curl
-      - php81-openssl
+      - php  
+      - php-curl
 
 environment:
   contents:
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     repositories:
-      - https://dl-cdn.alpinelinux.org/alpine/edge/main
-      - https://dl-cdn.alpinelinux.org/alpine/edge/community
+      - https://packages.wolfi.dev/os
     packages:
-      - alpine-baselayout-data
       - ca-certificates-bundle
+      - busybox
       - curl
-      - php81
-      - php81-common
-      - php81-curl
-      - php81-openssl
+      - git
+      - php
+      - php-phar
+      - php-iconv
+      - php-openssl
+      - php-curl
       - composer
 
 pipeline:

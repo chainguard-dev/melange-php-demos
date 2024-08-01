@@ -1,10 +1,12 @@
 contents:
+  keyring:
+    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    - ./melange.rsa.pub   
   repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/edge/main
-    - https://dl-cdn.alpinelinux.org/alpine/edge/community
-    - '@local /work/packages'
+    - https://packages.wolfi.dev/os
+    - '@local /work/packages'    
   packages:
-    - alpine-baselayout-data
+    - wolfi-base
     - ca-certificates-bundle
     - hello-minicli@local
 accounts:
