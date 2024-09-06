@@ -37,11 +37,10 @@ This will generate a `melange.rsa` and `melange.rsa.pub` files in the current di
 Next, build the APK defined in the `melange.yaml` file:
 
 ```shell
-docker run --privileged --rm -v "${PWD}":/work \                         
-  cgr.dev/chainguard/melange build melange.yaml \
-  --arch amd64,aarch64 \
-  --signing-key melange.rsa
-
+docker run --privileged --rm --volume "${PWD}":/work \
+cgr.dev/chainguard/melange build melange.yaml \
+--arch amd64,aarch64 \
+--signing-key melange.rsa
 ```
 
 This should get you `aarch64` and `x86_64` APK packages at the location `./packages`:
@@ -67,8 +66,8 @@ With the APK packages and APK index in place, you can now build a container imag
 
 ```shell
 docker run --rm --workdir /work -v ${PWD}:/work cgr.dev/chainguard/apko \
-  build apko.yaml hello-minicli:test hello-minicli.tar \
-  --arch host
+build apko.yaml hello-minicli:test hello-minicli.tar \
+--arch host
 ```
 
 This will build an OCI image based on your host system's architecture - most likely this will be `x86_64`.
